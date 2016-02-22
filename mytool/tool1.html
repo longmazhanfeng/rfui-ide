@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tool</title> 
+</head>
+
+<body>
+    <table width="100%" height="100%">
+      <tbody><tr>
+            <td>
+              <h1>RFUI图形编程工具
+              </h1>
+            </td>  
+          </tr>
+          <tr>
+            <td colspan="2">
+              <table width="100%">
+                <tbody><tr id="tabRow" height="1em">
+                  <td id="tab_blocks" class="tabon" style="min-width: 71px;">Blocks</td>
+                  <td class="tabmin">&nbsp;</td>
+                  <td id="tab_javascript" class="taboff">JavaScript</td>
+                  <td class="tabmin">&nbsp;</td>
+                  <td id="tab_python" class="taboff">Python</td>
+                  <td class="tabmin">&nbsp;</td>
+                  <td id="tab_php" class="taboff">PHP</td>
+                  <td class="tabmin">&nbsp;</td>
+                  <td id="tab_dart" class="taboff">Dart</td>
+                  <td class="tabmin">&nbsp;</td>
+                  <td id="tab_xml" class="taboff">XML</td>
+                  <td class="tabmax">
+                    <button id="trashButton" class="notext" title="Discard all blocks.">
+                      <img src="../../media/1x1.gif" class="trash icon21">
+                    </button>
+                    <button id="linkButton" class="notext" title="Save and link to blocks.">
+                      <img src="../../media/1x1.gif" class="link icon21">
+                    </button>
+                    <button id="runButton" class="notext primary" title="Run the program defined by the blocks in the workspace.">
+                      <img src="../../media/1x1.gif" class="run icon21">
+                    </button>
+                  </td>
+                </tr>
+              </tbody></table>
+            </td>
+          </tr>
+          <tr>
+            <td height="99%" colspan="2" id="content_area">
+            </td>
+          </tr>
+        </tbody>
+    </table>
+
+    <xml id="toolbox" style="display: none">
+      <block type="logic_boolean"></block>
+
+      <block type="math_number">
+        <field name="NUM">42</field>
+      </block>
+
+      <block type="controls_for">
+        <value name="FROM">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+
+      <block type="math_arithmetic">
+        <field name="OP">ADD</field>
+        <value name="A">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="B">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+    </xml>
+    
+    <script src="../blockly_compressed.js"></script>
+    <script src="../blocks_compressed.js"></script>
+    <script src="../msg/js/en.js"></script>
+
+    <script>
+      var workspace = Blockly.inject('blocklyDiv',
+          {toolbox: document.getElementById('toolbox')});
+    </script>
+
+</body>
+
+</html>
