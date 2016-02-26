@@ -1,4 +1,6 @@
+[TOC]
 # rfui-ide
+
 ## 1. M1版本
 如下图所示，rfui-ide主界面分为三个区域：左侧块区域、功能区域、编辑区域，其中红色方框和“✔”标记的是已有功能，蓝色方框和“✚”标记的是待实现功能
 ![M1 UI设计](https://raw.githubusercontent.com/longmazhanfeng/rfui-ide/master/demos/code/img/rfui-ide-M1.PNG)
