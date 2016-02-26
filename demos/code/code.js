@@ -336,13 +336,45 @@ Code.renderContent = function() {
       content.innerHTML = code;
     }
   } else if (content.id == 'content_dart') {
-    code = Blockly.Dart.workspaceToCode(Code.workspace);
-    content.textContent = code;
-    if (typeof prettyPrintOne == 'function') {
-      code = content.innerHTML;
-      code = prettyPrintOne(code, 'dart');
-      content.innerHTML = code;
-    }
+    // code = Blockly.Dart.workspaceToCode(Code.workspace);
+    // content.textContent = code;
+    // if (typeof prettyPrintOne == 'function') {
+    //   code = content.innerHTML;
+    //   code = prettyPrintOne(code, 'dart');
+    //   content.innerHTML = code;
+    // }
+
+    // 尝试显示xml转义的RobotFramework Testcase---txt格式
+    var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
+    var testcase_list = [];
+    var text;
+    // var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+    
+    // 开始解析，遍历子节点，只有type="procedures_callnoreturn"的block才是正确的解析对象
+    var blocks = xmlDom.getElementsByTagName("block");
+    console.log(blocks.length);
+    for (var i = 0; i < blocks.length; i++) {
+      if (blocks[i].getAttribute("type") == "procedures_callnoreturn") {
+        var muta_name = blocks[i].getElementsByTagName("mutation")[0].getAttribute("name");
+        testcase_list.push(muta_name);
+      
+        var child_nodes = blocks[i].childNodes;   
+              
+        for (var j = 0; j < child_nodes.length; j++) {
+          // console.log(child_nodes[j].nodeName == "VALUE");
+          if (child_nodes[j].nodeName == "VALUE") {
+            // console.log(child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue);
+            text = child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
+            testcase_list.push(text);
+          };
+          
+        };        
+        testcase_list.push("\n");
+        // console.log(testcase_list);
+      };
+    };
+    // console.log(testcase_list.toString());
+    content.textContent = testcase_list.toString();
   }
 };
 
