@@ -1,5 +1,5 @@
 var MSG = {
-  title: "代码",
+  title: "可视化编辑工具",
   blocks: "块",
   linkTooltip: "保存模块并生成链接。",
   runTooltip: "于工作区中运行块所定义的程式。",
