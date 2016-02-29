@@ -246,7 +246,7 @@ Code.LANG = Code.getLang();
  * List of tab names.
  * @private
  */
-Code.TABS_ = ['blocks', 'javascript', 'php', 'python', 'dart', 'xml'];
+Code.TABS_ = ['blocks', 'dart', 'xml'];
 
 Code.selected = 'blocks';
 
@@ -311,30 +311,6 @@ Code.renderContent = function() {
     var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
     xmlTextarea.value = xmlText;
     xmlTextarea.focus();
-  } else if (content.id == 'content_javascript') {
-    var code = Blockly.JavaScript.workspaceToCode(Code.workspace);
-    content.textContent = code;
-    if (typeof prettyPrintOne == 'function') {
-      code = content.innerHTML;
-      code = prettyPrintOne(code, 'js');
-      content.innerHTML = code;
-    }
-  } else if (content.id == 'content_python') {
-    code = Blockly.Python.workspaceToCode(Code.workspace);
-    content.textContent = code;
-    if (typeof prettyPrintOne == 'function') {
-      code = content.innerHTML;
-      code = prettyPrintOne(code, 'py');
-      content.innerHTML = code;
-    }
-  } else if (content.id == 'content_php') {
-    code = Blockly.PHP.workspaceToCode(Code.workspace);
-    content.textContent = code;
-    if (typeof prettyPrintOne == 'function') {
-      code = content.innerHTML;
-      code = prettyPrintOne(code, 'php');
-      content.innerHTML = code;
-    }
   } else if (content.id == 'content_dart') {
     // code = Blockly.Dart.workspaceToCode(Code.workspace);
     // content.textContent = code;
@@ -348,18 +324,14 @@ Code.renderContent = function() {
     var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
     var testcase_list = [];
     var text;
-    // var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-    
     // 开始解析，遍历子节点，只有type="procedures_callnoreturn"的block才是正确的解析对象
     var blocks = xmlDom.getElementsByTagName("block");
-    console.log(blocks.length);
+    // console.log(blocks.length);
     for (var i = 0; i < blocks.length; i++) {
       if (blocks[i].getAttribute("type") == "procedures_callnoreturn") {
         var muta_name = blocks[i].getElementsByTagName("mutation")[0].getAttribute("name");
-        testcase_list.push(muta_name);
-      
-        var child_nodes = blocks[i].childNodes;   
-              
+        testcase_list.push(muta_name);      
+        var child_nodes = blocks[i].childNodes;  
         for (var j = 0; j < child_nodes.length; j++) {
           // console.log(child_nodes[j].nodeName == "VALUE");
           if (child_nodes[j].nodeName == "VALUE") {
@@ -370,10 +342,14 @@ Code.renderContent = function() {
           
         };        
         testcase_list.push("\n");
-        // console.log(testcase_list);
       };
     };
-    // console.log(testcase_list.toString());
+
+    // 格式化字符串，满足RobotFramework执行格式要求
+    // for (var i = 0; i < testcase_list.length; i++) {
+    //   testcase_list[i]
+    // };
+   
     content.textContent = testcase_list.toString();
   }
 };
@@ -507,19 +483,14 @@ Code.initLanguage = function() {
   document.getElementById('runButton').title = MSG['runTooltip'];
   document.getElementById('trashButton').title = MSG['trashTooltip'];
 
-  var categories = ['catLogic', 'catLoops', 'catMath', 'catText', 'catLists',
-                    'catColour', 'catVariables', 'catFunctions'];
+  var categories = ['catLogic', 'catLoops', 'catText', 'catFunctions'];
   for (var i = 0, cat; cat = categories[i]; i++) {
     document.getElementById(cat).setAttribute('name', MSG[cat]);
   }
   var textVars = document.getElementsByClassName('textVar');
   for (var i = 0, textVar; textVar = textVars[i]; i++) {
     textVar.textContent = MSG['textVariable'];
-  }
-  var listVars = document.getElementsByClassName('listVar');
-  for (var i = 0, listVar; listVar = listVars[i]; i++) {
-    listVar.textContent = MSG['listVariable'];
-  }
+  } 
 };
 
 /**
