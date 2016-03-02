@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="google" value="notranslate">
-  <title>Blockly Demo:</title>
+  <title>RFUI-IDE</title>
   <link rel="stylesheet" href="style.css">
 
   <script src="../../blockly_compressed.js"></script>
@@ -13,6 +13,7 @@
   <script src="../../php_compressed.js"></script>
   <script src="../../dart_compressed.js"></script>
   <script src="code.js"></script>
+  <script src="../../blocks/robot.js"></script>
 </head>
 <body>
   <table width="100%" height="100%">
@@ -100,11 +101,15 @@
     </category>
 
     <category id="catText" colour="160">
+      <block type="case_title"></block>
       <block type="text"></block>
-      <block type="title"></block>
+      <block type="case_settings"></block>
+      <block type="setting_casename"></block>
+      <block type="setting_tags"></block>
+      <block type="setting_setup"></block>
+      <block type="setting_teardown"></block>
+      <block type="setting_item"></block>
     </category>
-
-
 
     <sep></sep>
     <category id="catFunctions" colour="290" custom="PROCEDURE"></category>
