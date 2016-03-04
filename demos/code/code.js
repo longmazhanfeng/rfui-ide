@@ -483,7 +483,7 @@ Code.initLanguage = function() {
   document.getElementById('runButton').title = MSG['runTooltip'];
   document.getElementById('trashButton').title = MSG['trashTooltip'];
 
-  var categories = ['catLogic', 'catLoops', 'catText', 'catFunctions'];
+  var categories = ['catTestcasename','catDocumentation','catTags','catSetup','catText', 'catFunctions','catTeardown'];
   for (var i = 0, cat; cat = categories[i]; i++) {
     document.getElementById(cat).setAttribute('name', MSG[cat]);
   }
