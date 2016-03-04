@@ -34,21 +34,7 @@ goog.require('Blockly.Blocks');
  */
 Blockly.Blocks.texts.HUE = 160;
 
-Blockly.Blocks['case_title'] = {
-  /**
-   * Block for testcase name
-   * @this Blockly.Block
-   */
-  init: function() {
-    this.appendValueInput("name")
-        .setCheck("String")
-        .appendField("用例名称：");
-    this.setInputsInline(true);
-    this.setNextStatement(true, null);
-    this.setColour(Blockly.Blocks.texts.HUE);
-    this.setTooltip('Set Testcase name');
-  }
-};
+
 
 Blockly.Blocks['case_settings'] = {
   /**
@@ -63,13 +49,14 @@ Blockly.Blocks['case_settings'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     // this.setOutput(true, 'Array');
-    this.setMutator(new Blockly.Mutator(['setting_item', 'setting_casename', 'setting_tags', 'setting_setup']));
+    this.setMutator(new Blockly.Mutator(['setting_item', 'setting_casename', 'setting_documentation','setting_tags', 'setting_setup']));
     this.setTooltip("用例设置");
 
     var thisBlock = this;
     this.itemCount_ = 2;
     this.casenameCount_ = 1;
     this.tagsCount_ = 0;
+    this.documentCount_ = 0;
     this.setupCount_ = 0;
   },
   /**
@@ -92,6 +79,9 @@ Blockly.Blocks['case_settings'] = {
       container.setAttribute('tags', this.tagsCount_);
     }
     
+    if (this.documentationCount_) {
+      container.setAttribute('documentation', this.documentationCount_);
+    }
     if (this.setupCount_) {
       container.setAttribute('setup', this.setupCount_);
     }
@@ -194,24 +184,23 @@ Blockly.Blocks['case_settings'] = {
   }
 };
 
+
+
 Blockly.Blocks['setting_casename'] = {
-  /**
-   * Mutator bolck for testcase name.
-   * @this Blockly.Block
-   */
+  // Text value.
   init: function() {
-    this.setColour(Blockly.Blocks.texts.HUE);
-    this.appendValueInput("test_name")
-        .setCheck("String")
-        .setAlign(Blockly.ALIGN_CENTRE)
-        .appendField("用例名称：");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip(Blockly.Msg.LISTS_CREATE_WITH_ITEM_TOOLTIP);
-    this.contextMenu = false;
+    this.setColour(20);
+    this.appendDummyInput()
+        .appendField('用例名称：')
+        .appendField(new Blockly.FieldTextInput(''), 'TEXT');
+    this.setPreviousStatement(false, 'Field');
+    this.setNextStatement(true, 'Field');
+    this.setTooltip('Static text that serves as a label.');
+    this.setHelpUrl('https://www.youtube.com/watch?v=s2_xaEvcVI0#t=88');
   }
 };
+
+
 
 Blockly.Blocks['setting_tags'] = {
   /**
@@ -219,7 +208,7 @@ Blockly.Blocks['setting_tags'] = {
    * @this Blockly.Block
    */
   init: function() {
-    this.setColour(Blockly.Blocks.texts.HUE);
+    this.setColour(90);
     this.appendValueInput("[Tags]")
         .setCheck("String")
         .setAlign(Blockly.ALIGN_CENTRE)
@@ -238,7 +227,7 @@ Blockly.Blocks['setting_setup'] = {
    * @this Blockly.Block
    */
   init: function() {
-    this.setColour(Blockly.Blocks.texts.HUE);
+    this.setColour(330);
     this.appendValueInput("[Setup]")
         .setCheck("String")
         .setAlign(Blockly.ALIGN_CENTRE)
@@ -251,22 +240,36 @@ Blockly.Blocks['setting_setup'] = {
   }
 };
 
-Blockly.Blocks['setting_teardown'] = {
-  /**
-   * Mutator bolck for testcase teardown.
-   * @this Blockly.Block
-   */
+
+
+
+Blockly.Blocks['setting_documentation'] = {
+  // Text value.
   init: function() {
-    this.setColour(Blockly.Blocks.texts.HUE);
-    this.appendValueInput("[Teardown]")
-        .setCheck("String")
-        .setAlign(Blockly.ALIGN_CENTRE)
-        .appendField("[Teardown]");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip(Blockly.Msg.LISTS_CREATE_WITH_ITEM_TOOLTIP);
-    this.contextMenu = false;
+    this.setColour(60);
+    this.appendDummyInput()
+        .appendField('[Documentation]')
+        .appendField(new Blockly.FieldTextInput(''), 'TEXT');
+    this.setPreviousStatement(true, 'Field');
+    this.setNextStatement(true, 'Field');
+    this.setTooltip('Static text that serves as a label.');
+    this.setHelpUrl('https://www.youtube.com/watch?v=s2_xaEvcVI0#t=88');
+  }
+};
+
+
+
+Blockly.Blocks['setting_teardown'] = {
+  // Text value.
+  init: function() {
+    this.setColour(120);
+    this.appendDummyInput()
+        .appendField('[Teardown]')
+        .appendField(new Blockly.FieldTextInput(''), 'TEXT');
+    this.setPreviousStatement(true, 'Field');
+    this.setNextStatement(false, 'Field');
+    this.setTooltip('Static text that serves as a label.');
+    this.setHelpUrl('https://www.youtube.com/watch?v=s2_xaEvcVI0#t=88');
   }
 };
 
