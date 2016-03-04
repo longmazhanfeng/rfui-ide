@@ -61,58 +61,36 @@
   <textarea id="content_xml" class="content" wrap="off"></textarea>
 
   <xml id="toolbox" style="display: none">
-    <category id="catLogic" colour="210">
-      <block type="controls_if"></block>
-      <block type="logic_compare"></block>
-      <block type="logic_operation"></block>
-      <block type="logic_negate"></block>
-      <block type="logic_boolean"></block>
-      <block type="logic_null"></block>
-      <block type="logic_ternary"></block>
+
+    <category id="catTestcasename" colour="20" >
+    <block type="setting_casename"></block>
     </category>
-    <category id="catLoops" colour="120">
-      <block type="controls_repeat_ext">
-        <value name="TIMES">
-          <shadow type="math_number">
-            <field name="NUM">10</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="controls_whileUntil"></block>
-      <block type="controls_for">
-        <value name="FROM">
-          <shadow type="math_number">
-            <field name="NUM">1</field>
-          </shadow>
-        </value>
-        <value name="TO">
-          <shadow type="math_number">
-            <field name="NUM">10</field>
-          </shadow>
-        </value>
-        <value name="BY">
-          <shadow type="math_number">
-            <field name="NUM">1</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="controls_forEach"></block>
-      <block type="controls_flow_statements"></block>
+
+    <category id="catDocumentation" colour="60" >
+    <block type="setting_documentation"></block>
+    </category>
+    <category id="catTags" colour="90" >
+    <block type="setting_tags"></block>
+    </category>
+    <category id="catSetup" colour="330" >
+    <block type="setting_setup"></block>
     </category>
 
     <category id="catText" colour="160">
-      <block type="case_title"></block>
+     
       <block type="text"></block>
       <block type="case_settings"></block>
-      <block type="setting_casename"></block>
-      <block type="setting_tags"></block>
-      <block type="setting_setup"></block>
-      <block type="setting_teardown"></block>
       <block type="setting_item"></block>
     </category>
 
     <sep></sep>
-    <category id="catFunctions" colour="290" custom="PROCEDURE"></category>
+    <category id="catFunctions" colour="290">
+    <block type="procedures_defnoreturn"></block>
+    </category>
+     <category id="catTeardown" colour="120" >
+    <block type="setting_teardown"></block>
+     </category>
+
   </xml>
 
 </body>
