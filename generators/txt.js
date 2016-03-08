@@ -106,9 +106,9 @@ Blockly.TXT.getFuntion = function (block) {
 	list.push(muta_name);      
 	var child_nodes = block.childNodes;  
 	for (var j = 0; j < child_nodes.length; j++) {
-	  console.log(child_nodes[j].nodeName == "VALUE");
+	  // console.log(child_nodes[j].nodeName == "VALUE");
 	  if (child_nodes[j].nodeName == "VALUE") {
-	    console.log(child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue);
+	    // console.log(child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue);
 	    var text = child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
 	    list.push(text);
 	  };	          

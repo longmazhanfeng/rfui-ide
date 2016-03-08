@@ -33,6 +33,7 @@ goog.require('Blockly.Blocks');
  */
 Blockly.Blocks.texts.HUE = 160;
 
+
 Blockly.Blocks['case_name'] = {
   /**
    * Block for testcase name
@@ -58,7 +59,7 @@ Blockly.Blocks['setting_documentation'] = {
     this.setColour(Blockly.Blocks.lists.HUE);
     this.appendDummyInput()
         .appendField(Blockly.Msg.rfui.DOCUMENTATION)
-        .appendField(new Blockly.FieldTextInput('document'), 'TEXT');
+        .appendField(new Blockly.FieldTextInput('Document'), 'TEXT');
     this.setPreviousStatement(true, 'Field');
     this.setNextStatement(true, 'Field');
     this.setTooltip(Blockly.Msg.rfui.DOCUMENTATION_TIPS);
@@ -82,6 +83,7 @@ Blockly.Blocks['setting_setup'] = {
     this.setNextStatement(true, null);
     this.setMutator(new Blockly.Mutator(['lists_create_with_item']));
     this.setTooltip(Blockly.Msg.LISTS_CREATE_WITH_TOOLTIP);
+
   },
   /**
    * Create XML to represent list inputs.
@@ -313,7 +315,10 @@ Blockly.Blocks['setting_tags'] = {
       }
     }
   }
+
+  
 };
+
 
 Blockly.Blocks['setting_teardown'] = {
   /**
@@ -452,6 +457,7 @@ Blockly.Blocks['lists_create_with_container'] = {
     this.appendStatementInput('STACK');
     this.setTooltip(Blockly.Msg.LISTS_CREATE_WITH_CONTAINER_TOOLTIP);
     this.contextMenu = false;
+
   }
 };
 
