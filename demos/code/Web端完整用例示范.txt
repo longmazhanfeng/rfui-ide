@@ -11,9 +11,14 @@ Web端完整用例示范
     [Teardown]    关闭Chrome浏览器
 
 
-登录页_登录易信公众平台,15102728450@163.com,test1234,hzdonghao,
-,公众平台主页_进入基础素材页,
-,基础素材页_进入创建单图文页,
-,创建单图文页_新建单图文,一条单图文消息,${CURDIR}\\pic0.jpg,副标题,这是正文,https://plus.yixin.im,
-,创建单图文页_成功验证,
-,基础素材页_删除最新创建的单图文,
+Web端完整用例示范    
+    [Documentation]    新建单图文用例，含验证和状态清除    
+    [Tags]    Succeed    
+    [Setup]    启动Chrome浏览器    https://plus.yixin.im    
+    登录页_登录易信公众平台    15102728450@163.com    test1234    hzdonghao    
+    公众平台主页_进入基础素材页    
+    基础素材页_进入创建单图文页    
+    创建单图文页_新建单图文    一条单图文消息    ${CURDIR}\\pic0.jpg    副标题    这是正文    https://plus.yixin.im    
+    创建单图文页_成功验证    
+    基础素材页_删除最新创建的单图文    
+    [Teardown]    关闭Chrome浏览器  
