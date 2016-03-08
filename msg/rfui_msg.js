@@ -42,4 +42,10 @@ goog.require('Blockly.Msg');
  * to message files.
  */
 
-Blockly.Msg.rfui.SETUP_TITLE = "[Setup]";
+Blockly.Msg.rfui.SETUP = "[Setup]";
+Blockly.Msg.rfui.TESTCASE_NAME = "用例名称：";
+Blockly.Msg.rfui.CASETITLE_TIPS = "设置用例名称";
+Blockly.Msg.rfui.DOCUMENTATION_TIPS = "设置Documentation";
+Blockly.Msg.rfui.TAGS = "[Tags]";
+Blockly.Msg.rfui.TEARDOWN = "[Teardown]";
+Blockly.Msg.rfui.DOCUMENTATION = "[Documentation]";
