@@ -312,45 +312,39 @@ Code.renderContent = function() {
     xmlTextarea.value = xmlText;
     xmlTextarea.focus();
   } else if (content.id == 'content_dart') {
-    // code = Blockly.Dart.workspaceToCode(Code.workspace);
-    // content.textContent = code;
-    // if (typeof prettyPrintOne == 'function') {
-    //   code = content.innerHTML;
-    //   code = prettyPrintOne(code, 'dart');
-    //   content.innerHTML = code;
-    // }
 
     // 尝试显示xml转义的RobotFramework Testcase---txt格式
     var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
     var testcase_list = [];
-    var text;
-    // 开始解析，遍历子节点，只有type="procedures_callnoreturn"的block才是正确的解析对象
+    // 开始解析，遍历子节点
     var blocks = xmlDom.getElementsByTagName("block");
     // console.log(blocks.length);
-    for (var i = 0; i < blocks.length; i++) {
-      if (blocks[i].getAttribute("type") == "procedures_callnoreturn") {
-        var muta_name = blocks[i].getElementsByTagName("mutation")[0].getAttribute("name");
-        testcase_list.push(muta_name);      
-        var child_nodes = blocks[i].childNodes;  
-        for (var j = 0; j < child_nodes.length; j++) {
-          // console.log(child_nodes[j].nodeName == "VALUE");
-          if (child_nodes[j].nodeName == "VALUE") {
-            // console.log(child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue);
-            text = child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
-            testcase_list.push(text);
-          };
-          
-        };        
-        testcase_list.push("\n");
-      };
-    };
+    for (var i = 0; i < blocks.length; i++) {     
+      switch (blocks[i].getAttribute("type"))
+      {
+        case 'case_name':
+          testcase_list = testcase_list.concat(Blockly.TXT.getCasename(blocks[i]));
+          break;
+        case 'setting_documentation':
+          testcase_list = testcase_list.concat(Blockly.TXT.getDocumentation(blocks[i]));
+          break;
+        case 'setting_tags':
+          testcase_list = testcase_list.concat(Blockly.TXT.getTags(blocks[i]));
+          break;
+        case 'setting_setup':
+          testcase_list = testcase_list.concat(Blockly.TXT.getSetup(blocks[i]));
+          break;
+        case 'procedures_callnoreturn':
+          testcase_list = testcase_list.concat(Blockly.TXT.getFuntion(blocks[i]));
+          break;
+        case 'setting_teardown':
+          testcase_list = testcase_list.concat(Blockly.TXT.getTeardown(blocks[i]));
+          break;
+      }
 
-    // 格式化字符串，满足RobotFramework执行格式要求
-    // for (var i = 0; i < testcase_list.length; i++) {
-    //   testcase_list[i]
-    // };
-   
-    content.textContent = testcase_list.toString();
+    };
+    // 将String格式化为RobotFramework支持的TXT格式
+    content.textContent = testcase_list.toString().replace(/,/g, '    ');
   }
 };
 
@@ -483,7 +477,7 @@ Code.initLanguage = function() {
   document.getElementById('runButton').title = MSG['runTooltip'];
   document.getElementById('trashButton').title = MSG['trashTooltip'];
 
-  var categories = ['catLogic', 'catLoops', 'catText', 'catFunctions'];
+  var categories = ['catCasename', 'catDocumentation', 'catTags', 'catSetup', 'catTeardown', 'catText', 'catFunctions'];
   for (var i = 0, cat; cat = categories[i]; i++) {
     document.getElementById(cat).setAttribute('name', MSG[cat]);
   }
