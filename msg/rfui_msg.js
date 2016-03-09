@@ -42,10 +42,20 @@ goog.require('Blockly.Msg');
  * to message files.
  */
 
+// 标签
 Blockly.Msg.rfui.SETUP = "[Setup]";
 Blockly.Msg.rfui.TESTCASE_NAME = "用例名称：";
-Blockly.Msg.rfui.CASETITLE_TIPS = "设置用例名称";
+Blockly.Msg.rfui.CASETITLE_TIPS = "设置用例";
 Blockly.Msg.rfui.DOCUMENTATION_TIPS = "设置Documentation";
 Blockly.Msg.rfui.TAGS = "[Tags]";
 Blockly.Msg.rfui.TEARDOWN = "[Teardown]";
 Blockly.Msg.rfui.DOCUMENTATION = "[Documentation]";
+Blockly.Msg.rfui.SUITE_NAME = "testsuite";
+Blockly.Msg.rfui.TESTSUITE= "用例集";
+Blockly.Msg.rfui.SETTINGS_NAME = "settings";
+Blockly.Msg.rfui.SETTINGS = "用例集配置";
+Blockly.Msg.rfui.RESOURCE = "Resource";
+// Robot格式 Testcase分割线
+Blockly.Msg.rfui.TESTSUITE_LINE = "*** Test Cases ***";
+// Robot格式 Setting分割线
+Blockly.Msg.rfui.SETTING_LINE = "*** Settings ***";

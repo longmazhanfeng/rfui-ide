@@ -33,6 +33,50 @@ goog.require('Blockly.Blocks');
  */
 Blockly.Blocks.texts.HUE = 160;
 
+Blockly.Blocks['settings'] = {
+  /**
+   * Block for testsuite settings
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.appendStatementInput(Blockly.Msg.rfui.SETTINGS_NAME)
+        .appendField(Blockly.Msg.rfui.SETTINGS);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.Blocks.lists.HUE);
+    this.setTooltip(Blockly.Msg.rfui.CASETITLE_TIPS);
+  }
+};
+
+Blockly.Blocks['testsuite'] = {
+  /**
+   * Block for testsuite which contain testcases
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.appendStatementInput(Blockly.Msg.rfui.SUITE_NAME)
+        .appendField(Blockly.Msg.rfui.TESTSUITE);
+    this.setPreviousStatement(true, null);
+    this.setColour(Blockly.Blocks.lists.HUE);
+    this.setTooltip(Blockly.Msg.rfui.CASETITLE_TIPS);
+  }
+};
+
+Blockly.Blocks['setting_resource'] = {
+  /**
+   * Block for setting suite resource
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.appendDummyInput()
+        .appendField(Blockly.Msg.rfui.RESOURCE)
+        .appendField(new Blockly.FieldTextInput(''), 'TEXT');
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.Blocks.lists.HUE);
+    this.setTooltip(Blockly.Msg.rfui.CASETITLE_TIPS);
+  }
+};
 
 Blockly.Blocks['case_name'] = {
   /**
@@ -44,6 +88,7 @@ Blockly.Blocks['case_name'] = {
         .appendField(Blockly.Msg.rfui.TESTCASE_NAME)
         .appendField(new Blockly.FieldTextInput('Tesacase'), 'TEXT');
     this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(Blockly.Blocks.lists.HUE);
     this.setTooltip(Blockly.Msg.rfui.CASETITLE_TIPS);
@@ -334,7 +379,7 @@ Blockly.Blocks['setting_teardown'] = {
     this.updateShape_();
     // this.setOutput(true, 'Array');
     this.setPreviousStatement(true, null);
-    // this.setNextStatement(true, null);
+    this.setNextStatement(true, null);
     this.setMutator(new Blockly.Mutator(['lists_create_with_item']));
     this.setTooltip(Blockly.Msg.LISTS_CREATE_WITH_TOOLTIP);
   },

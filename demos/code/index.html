@@ -17,6 +17,7 @@
   <script src="../../blocks/robot.js"></script>
   <script src="../../generators/txt.js"></script>
   <script src="../../msg/rfui_msg.js"></script>
+  <script src="../../FileSaver.min.js"></script>
 </head>
 <body>
   <table width="100%" height="100%">
@@ -43,8 +44,8 @@
               <button id="trashButton" class="notext" title="...">
                 <img src='../../media/1x1.gif' class="trash icon21">
               </button>
-              <button id="linkButton" class="notext" title="...">
-                <img src='../../media/1x1.gif' class="link icon21">
+              <button id="saveButton" class="notext" title="...">
+                <img src='../../media/save.png' class="link icon21">
               </button>
               <button id="runButton" class="notext primary" title="...">
                 <img src='../../media/1x1.gif' class="run icon21">
@@ -64,39 +65,25 @@
   <textarea id="content_xml" class="content" wrap="off"></textarea>
 
   <xml id="toolbox" style="display: none">
+    <category id="catSettings" colour="0">
+      <block type="settings"></block> 
+      <block type="setting_resource"></block> 
+    </category>
     <category id="catCasename" colour="0">
+      <block type="testsuite"></block>
       <block type="case_name"></block>
-    </category>
-
-    <category id="catDocumentation" colour="0">
       <block type="setting_documentation"></block>
-    </category>
-
-    <category id="catTags" colour="0">
       <block type="setting_tags"></block>
-    </category>
-
-    <category id="catSetup" colour="0">
       <block type="setting_setup"></block> 
-    </category>
-
-    <category id="catTeardown" colour="0">
       <block type="setting_teardown"></block> 
     </category>
-
+    <sep></sep>
     <category id="catText" colour="160">
       <block type="text"></block>
     </category>
 
     <sep></sep>
-    <category id="catFunctions" colour="290">
-    <block type="procedures_defnoreturn"></block>
-    </category>
-     <category id="catTeardown" colour="120" >
-    <block type="setting_teardown"></block>
-     </category>
-
+    <category id="catFunctions" colour="290" custom="PROCEDURE"></category>
   </xml>
-
 </body>
 </html>

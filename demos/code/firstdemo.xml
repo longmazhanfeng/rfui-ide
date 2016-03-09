@@ -1,106 +1,119 @@
 <xml xmlns="http://www.w3.org/1999/xhtml">
-  <block type="case_name" id=",HbuI8X+Pi.1_*zXO~g|" x="63" y="-63">
-    <field name="TEXT">Web端完整用例示范</field>
+  <block type="settings" id="5fhQ:IHk9dikNBI.S3l2" x="63" y="-88">
+    <statement name="settings">
+      <block type="setting_resource" id="{Ll{5=PIv$Y8[kL0x~q[">
+        <field name="TEXT">PubResource_POM/Plus_Web/Web_Bussiness.txt</field>
+      </block>
+    </statement>
     <next>
-      <block type="setting_documentation" id="yftn,RrsgbK9v:N{^=a-">
-        <field name="TEXT">新建单图文用例，含验证和状态清除</field>
-        <next>
-          <block type="setting_tags" id="]CZssb_m-t;@*:y|gZ3g">
-            <mutation items="1"></mutation>
-            <value name="ADD0">
-              <block type="text" id="(keO$`E)hU(xHq{6GD=O">
-                <field name="TEXT">Succeed</field>
-              </block>
-            </value>
+      <block type="testsuite" id="ceu/k0sVq+%s]TQ3g}JF">
+        <statement name="testsuite">
+          <block type="case_name" id=",HbuI8X+Pi.1_*zXO~g|">
+            <field name="TEXT">Web端完整用例示范</field>
             <next>
-              <block type="setting_setup" id="|X2x}^.|.382ggj2,NXh">
-                <mutation items="2"></mutation>
-                <value name="ADD0">
-                  <block type="text" id="z!e*d2JGpe{Q/~|rkngp">
-                    <field name="TEXT">启动Chrome浏览器</field>
-                  </block>
-                </value>
-                <value name="ADD1">
-                  <block type="text" id="*Q~tHU1o)W(;jt54wlHR">
-                    <field name="TEXT">https://plus.yixin.im</field>
-                  </block>
-                </value>
+              <block type="setting_documentation" id="yftn,RrsgbK9v:N{^=a-">
+                <field name="TEXT">新建单图文用例，含验证和状态清除</field>
                 <next>
-                  <block type="procedures_callnoreturn" id="(W?y3#~Sg}7:`/+L=3LB">
-                    <mutation name="登录页_登录易信公众平台">
-                      <arg name="用户名"></arg>
-                      <arg name="密码"></arg>
-                      <arg name="验证标志"></arg>
-                    </mutation>
-                    <value name="ARG0">
-                      <block type="text" id="FM)dEU2^xew[Kz4ov47J">
-                        <field name="TEXT">15102728450@163.com</field>
+                  <block type="setting_setup" id="|X2x}^.|.382ggj2,NXh">
+                    <mutation items="2"></mutation>
+                    <value name="ADD0">
+                      <block type="text" id="z!e*d2JGpe{Q/~|rkngp">
+                        <field name="TEXT">启动Chrome浏览器</field>
                       </block>
                     </value>
-                    <value name="ARG1">
-                      <block type="text" id="9e,.i._@.dOfnUcN75xe">
-                        <field name="TEXT">test1234</field>
-                      </block>
-                    </value>
-                    <value name="ARG2">
-                      <block type="text" id="q)yLK$*CCI]1#T}Ip6J2">
-                        <field name="TEXT">hzdonghao</field>
+                    <value name="ADD1">
+                      <block type="text" id="*Q~tHU1o)W(;jt54wlHR">
+                        <field name="TEXT">https://plus.yixin.im</field>
                       </block>
                     </value>
                     <next>
-                      <block type="procedures_callnoreturn" id="NJ}3_JA3][R2%rEwoI`8">
-                        <mutation name="公众平台主页_进入基础素材页"></mutation>
+                      <block type="setting_tags" id="]CZssb_m-t;@*:y|gZ3g">
+                        <mutation items="1"></mutation>
+                        <value name="ADD0">
+                          <block type="text" id="(keO$`E)hU(xHq{6GD=O">
+                            <field name="TEXT">Succeed</field>
+                          </block>
+                        </value>
                         <next>
-                          <block type="procedures_callnoreturn" id="}xBiZQwKvH34h]J5T9@P">
-                            <mutation name="基础素材页_进入创建单图文页"></mutation>
+                          <block type="procedures_callnoreturn" id="(W?y3#~Sg}7:`/+L=3LB">
+                            <mutation name="登录页_登录易信公众平台">
+                              <arg name="用户名"></arg>
+                              <arg name="密码"></arg>
+                              <arg name="验证标志"></arg>
+                            </mutation>
+                            <value name="ARG0">
+                              <block type="text" id="FM)dEU2^xew[Kz4ov47J">
+                                <field name="TEXT">15102728450@163.com</field>
+                              </block>
+                            </value>
+                            <value name="ARG1">
+                              <block type="text" id="9e,.i._@.dOfnUcN75xe">
+                                <field name="TEXT">test1234</field>
+                              </block>
+                            </value>
+                            <value name="ARG2">
+                              <block type="text" id="q)yLK$*CCI]1#T}Ip6J2">
+                                <field name="TEXT">hzdonghao</field>
+                              </block>
+                            </value>
                             <next>
-                              <block type="procedures_callnoreturn" id="eGLHxSvh8EnGJ4%@muTM">
-                                <mutation name="创建单图文页_新建单图文">
-                                  <arg name="标题"></arg>
-                                  <arg name="图片"></arg>
-                                  <arg name="副标题"></arg>
-                                  <arg name="正文"></arg>
-                                  <arg name="链接地址"></arg>
-                                </mutation>
-                                <value name="ARG0">
-                                  <block type="text" id="0R[iU%fW4T]d?XghBL#v">
-                                    <field name="TEXT">一条单图文消息</field>
-                                  </block>
-                                </value>
-                                <value name="ARG1">
-                                  <block type="text" id="jOFdev8sL[5Nm}/O1zv4">
-                                    <field name="TEXT">${CURDIR}\\pic0.jpg</field>
-                                  </block>
-                                </value>
-                                <value name="ARG2">
-                                  <block type="text" id="KH@todrwYM;.TJNigv*D">
-                                    <field name="TEXT">副标题</field>
-                                  </block>
-                                </value>
-                                <value name="ARG3">
-                                  <block type="text" id="@hiI[#[h(B(.Sbr@!)/o">
-                                    <field name="TEXT">这是正文</field>
-                                  </block>
-                                </value>
-                                <value name="ARG4">
-                                  <block type="text" id="S3~1=Hz;e1_MnAMbs!,w">
-                                    <field name="TEXT">https://plus.yixin.im</field>
-                                  </block>
-                                </value>
+                              <block type="procedures_callnoreturn" id="NJ}3_JA3][R2%rEwoI`8">
+                                <mutation name="公众平台主页_进入基础素材页"></mutation>
                                 <next>
-                                  <block type="procedures_callnoreturn" id="m$b2Rs^WznaMMuSANzV$">
-                                    <mutation name="创建单图文页_成功验证"></mutation>
+                                  <block type="procedures_callnoreturn" id="}xBiZQwKvH34h]J5T9@P">
+                                    <mutation name="基础素材页_进入创建单图文页"></mutation>
                                     <next>
-                                      <block type="procedures_callnoreturn" id="ze$x?/q^kCN[`)/4p3lq">
-                                        <mutation name="基础素材页_删除最新创建的单图文"></mutation>
+                                      <block type="procedures_callnoreturn" id="eGLHxSvh8EnGJ4%@muTM">
+                                        <mutation name="创建单图文页_新建单图文">
+                                          <arg name="标题"></arg>
+                                          <arg name="图片"></arg>
+                                          <arg name="副标题"></arg>
+                                          <arg name="正文"></arg>
+                                          <arg name="链接地址"></arg>
+                                        </mutation>
+                                        <value name="ARG0">
+                                          <block type="text" id="0R[iU%fW4T]d?XghBL#v">
+                                            <field name="TEXT">一条单图文消息</field>
+                                          </block>
+                                        </value>
+                                        <value name="ARG1">
+                                          <block type="text" id="jOFdev8sL[5Nm}/O1zv4">
+                                            <field name="TEXT">${CURDIR}\\pic0.jpg</field>
+                                          </block>
+                                        </value>
+                                        <value name="ARG2">
+                                          <block type="text" id="KH@todrwYM;.TJNigv*D">
+                                            <field name="TEXT">副标题</field>
+                                          </block>
+                                        </value>
+                                        <value name="ARG3">
+                                          <block type="text" id="@hiI[#[h(B(.Sbr@!)/o">
+                                            <field name="TEXT">这是正文</field>
+                                          </block>
+                                        </value>
+                                        <value name="ARG4">
+                                          <block type="text" id="S3~1=Hz;e1_MnAMbs!,w">
+                                            <field name="TEXT">https://plus.yixin.im</field>
+                                          </block>
+                                        </value>
                                         <next>
-                                          <block type="setting_teardown" id=")NE6p-~8YDn0i!iatiy3">
-                                            <mutation items="1"></mutation>
-                                            <value name="ADD0">
-                                              <block type="text" id="^#R=u?4oNr27%ol^-Py9">
-                                                <field name="TEXT">关闭Chrome浏览器</field>
+                                          <block type="procedures_callnoreturn" id="ze$x?/q^kCN[`)/4p3lq">
+                                            <mutation name="基础素材页_删除最新创建的单图文"></mutation>
+                                            <next>
+                                              <block type="procedures_callnoreturn" id="m$b2Rs^WznaMMuSANzV$">
+                                                <mutation name="创建单图文页_成功验证"></mutation>
+                                                <next>
+                                                  <block type="setting_teardown" id=")NE6p-~8YDn0i!iatiy3">
+                                                    <mutation items="1"></mutation>
+                                                    <value name="ADD0">
+                                                      <block type="text" id="^#R=u?4oNr27%ol^-Py9">
+                                                        <field name="TEXT">关闭Chrome浏览器</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </next>
                                               </block>
-                                            </value>
+                                            </next>
                                           </block>
                                         </next>
                                       </block>
@@ -118,7 +131,7 @@
               </block>
             </next>
           </block>
-        </next>
+        </statement>
       </block>
     </next>
   </block>

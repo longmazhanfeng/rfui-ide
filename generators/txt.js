@@ -28,91 +28,114 @@ goog.provide('Blockly.TXT');
 
 goog.require('Blockly.Generator');
 
+// 返回block —— settings标签
+Blockly.TXT.getSettings = function (block) {
+	var str_settings = "";
+	str_settings = str_settings + Blockly.Msg.rfui.SETTING_LINE + "\n";
+	return str_settings;
+}
+
+// 返回block —— testsuite标签
+Blockly.TXT.getTestSuite = function (block) {
+	var str_testsuite = "";
+	str_testsuite = str_testsuite + "\n" + Blockly.Msg.rfui.TESTSUITE_LINE + "\n";
+	return str_testsuite;
+}
+
+// 返回block —— setting_resource 包含的内容
+Blockly.TXT.getResource = function (block) {
+	var str_resource = "";
+	str_resource = str_resource + Blockly.Msg.rfui.RESOURCE + "    " 
+					+ block.getElementsByTagName("field")[0].childNodes[0].nodeValue
+					+ "\n";
+	return str_resource;
+}
+
 // 返回block —— case_name 包含的内容
 Blockly.TXT.getCasename = function (block) {
-	var list = [];
-	var text = block.getElementsByTagName("field")[0].childNodes[0].nodeValue;
-	list.push(text);
-	list.push('\n');
-	return list;
+	var str_casename = "";
+	str_casename = str_casename 
+					+ block.getElementsByTagName("field")[0].childNodes[0].nodeValue
+					+ "\n";
+	return str_casename;
 }
 
 // 返回block —— setting_documentation 包含的内容
 Blockly.TXT.getDocumentation = function (block) {
-	var list = [];
-	list.push(Blockly.Msg.rfui.DOCUMENTATION);
-	var text = block.getElementsByTagName("field")[0].childNodes[0].nodeValue;
-	list.push(text);
-	list.push('\n');
-	return list;
+	var str_documentation = "";
+	str_documentation = str_documentation + "    "
+						+ Blockly.Msg.rfui.DOCUMENTATION
+						+ "    "
+						+ block.getElementsByTagName("field")[0].childNodes[0].nodeValue
+						+ "\n";
+	return str_documentation;
 }
 
 // 返回block —— setting_tags 包含的内容
 Blockly.TXT.getTags = function (block) {
-	var list = [];
-	list.push(Blockly.Msg.rfui.TAGS);
+	var str_tags = "";
+	str_tags = str_tags + "    " + Blockly.Msg.rfui.TAGS;
 	var child_nodes = block.childNodes;  
 	for (var j = 0; j < child_nodes.length; j++) {
 	  // console.log(child_nodes[j].nodeName == "VALUE");
 	  if (child_nodes[j].nodeName == "VALUE") {
 	    // console.log(child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue);
-	    var text = child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
-	  	list.push(text);
+	    str_tags = str_tags + "    " 
+	    			+ child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
 	  };		  
 	}; 
-	list.push('\n');
-	return list;
+	str_tags = str_tags + "\n";
+	return str_tags;
 }
 
 // 返回block —— setting_setup 包含的内容
 Blockly.TXT.getSetup = function (block) {
-	var list = [];
-	list.push(Blockly.Msg.rfui.SETUP);
+	var str_setup = "";
+	str_setup = str_setup + "    " + Blockly.Msg.rfui.SETUP;
 	var child_nodes = block.childNodes;  
 	for (var j = 0; j < child_nodes.length; j++) {
 	  // console.log(child_nodes[j].nodeName == "VALUE");
 	  if (child_nodes[j].nodeName == "VALUE") {
 	    // console.log(child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue);
-	    var text = child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
-	  	list.push(text);
+	    str_setup = str_setup + "    " 
+	    			+ child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
 	  };		  
 	};
-	list.push('\n'); 
-	return list;
+	str_setup = str_setup + "\n";
+	return str_setup;
 }
 
 // 返回block —— setting_teardown 包含的内容
 Blockly.TXT.getTeardown = function (block) {
-	var list = [];
-	list.push(Blockly.Msg.rfui.TEARDOWN);
+	var str_teardown = "";
+	str_teardown = str_teardown + "    " + Blockly.Msg.rfui.TEARDOWN;
 	var child_nodes = block.childNodes;  
 	for (var j = 0; j < child_nodes.length; j++) {
 	  // console.log(child_nodes[j].nodeName == "VALUE");
 	  if (child_nodes[j].nodeName == "VALUE") {
 	    // console.log(child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue);
-	    var text = child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
-	  	list.push(text);
+	    str_teardown = str_teardown + "    " 
+	    				+ child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
 	  };		  
 	};
-	list.push('\n'); 
-	return list;
+	str_teardown = str_teardown + "\n";
+	return str_teardown;
 }
 
 
 // 返回block —— function(自定义关键字) 包含的内容
-Blockly.TXT.getFuntion = function (block) {
-	var list = [];
-	var muta_name = block.getElementsByTagName("mutation")[0].getAttribute("name");
-	list.push(muta_name);      
+Blockly.TXT.getFunction = function (block) {
+	var str_function = "";
+	str_function = str_function + "    " + block.getElementsByTagName("mutation")[0].getAttribute("name");     
 	var child_nodes = block.childNodes;  
 	for (var j = 0; j < child_nodes.length; j++) {
 	  // console.log(child_nodes[j].nodeName == "VALUE");
 	  if (child_nodes[j].nodeName == "VALUE") {
 	    // console.log(child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue);
-	    var text = child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
-	    list.push(text);
+	    str_function = str_function + "    " 
+	    				+ child_nodes[j].getElementsByTagName("field")[0].childNodes[0].nodeValue;
 	  };	          
 	};        
-	list.push("\n");
-	return list;
+	str_function = str_function + "\n";
+	return str_function;
 }

@@ -1,3 +1,16 @@
+*** Settings ***
+Resource          PubResource_POM/Mobile_IOS/IOS_Bussiness.txt
+Resource          PubResource_POM/Mobile_Android/Android_Bussiness.txt    #Web业务层，这里用于测试
+Resource          PubResource_POM/Mobile_Android/Android_Bussiness.txt
+Resource          PubResource_POM/Plus_Web/页面元素表.txt
+Resource          PubResource_POM/Plus_Web/元子业务关键字.txt
+
+*** Variables ***
+&{test}           id=123
+${a}              720,152,123
+${b}              ${a}
+
+*** Test Cases ***
 Web端完整用例示范
     [Documentation]    新建单图文用例，含验证和状态清除
     [Tags]    Succeed
@@ -11,14 +24,28 @@ Web端完整用例示范
     [Teardown]    关闭Chrome浏览器
 
 
-Web端完整用例示范    
-    [Documentation]    新建单图文用例，含验证和状态清除    
-    [Tags]    Succeed    
-    [Setup]    启动Chrome浏览器    https://plus.yixin.im    
-    登录页_登录易信公众平台    15102728450@163.com    test1234    hzdonghao    
-    公众平台主页_进入基础素材页    
-    基础素材页_进入创建单图文页    
-    创建单图文页_新建单图文    一条单图文消息    ${CURDIR}\\pic0.jpg    副标题    这是正文    https://plus.yixin.im    
-    创建单图文页_成功验证    
-    基础素材页_删除最新创建的单图文    
-    [Teardown]    关闭Chrome浏览器  
+
+
+----------------------------------------------------------------------------------------------------------------------------
+Windows:
+E:\Robot_RIDE\YX_RFUI_Framework_demo\Test\YX_Subscriptions\TestSuite.txt
+
+
+*** Settings ***
+Resource    PubResource_POM/Mobile_IOS/IOS_Bussiness.txt
+Resource    PubResource_POM/Mobile_Android/Android_Bussiness.txt
+Resource    PubResource_POM/Plus_Web/元子业务关键字.txt
+Resource    PubResource_POM/Plus_Web/页面元素表.txt
+
+*** Test Cases ***
+Web端完整用例示范
+    [Documentation]    新建单图文用例，含验证和状态清除
+    [Tags]    Succeed
+    [Setup]    启动Chrome浏览器    https://plus.yixin.im
+    登录页_登录易信公众平台    15102728450@163.com    test1234    hzdonghao
+    公众平台主页_进入基础素材页
+    基础素材页_进入创建单图文页
+    创建单图文页_新建单图文    一条单图文消息    ${CURDIR}\\pic0.jpg    副标题    这是正文    https://plus.yixin.im
+    基础素材页_删除最新创建的单图文
+    创建单图文页_成功验证
+    [Teardown]    关闭Chrome浏览器   

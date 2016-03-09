@@ -1,7 +1,7 @@
 var MSG = {
   title: "可视化编辑工具",
   blocks: "块",
-  linkTooltip: "保存模块并生成链接。",
+  saveTooltip: "保存txt文本内容到本地",
   runTooltip: "于工作区中运行块所定义的程式。",
   badCode: "程序错误：\n%1",
   timeout: "超过最大执行行数。",
@@ -26,9 +26,6 @@ var MSG = {
   hashError: "对不起，没有任何已保存的程序对应'%1' 。",
   xmlError: "无法载入您保存的文件。您是否使用其他版本的Blockly创建该文件的？",
   badXml: "XML解析错误：\n%1\n\n选择“确定”以取消您对XML的修改，或选择“取消”以继续编辑XML。",
-  catCasename: "用例名称",
-  catDocumentation: "Test Documentation",
-  catTags: "Test Tags",
-  catSetup: "Test Setup",
-  catTeardown: "Test Teardown"
+  catCasename: "用例",
+  catSettings: "用例集设置"
 };

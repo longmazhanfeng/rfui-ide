@@ -244,6 +244,7 @@ Code.LANG = Code.getLang();
 
 /**
  * List of tab names.
+ * dart is txt
  * @private
  */
 Code.TABS_ = ['blocks', 'dart', 'xml'];
@@ -315,36 +316,44 @@ Code.renderContent = function() {
 
     // 尝试显示xml转义的RobotFramework Testcase---txt格式
     var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
-    var testcase_list = [];
+    var str_suite = "";
     // 开始解析，遍历子节点
     var blocks = xmlDom.getElementsByTagName("block");
     // console.log(blocks.length);
     for (var i = 0; i < blocks.length; i++) {     
       switch (blocks[i].getAttribute("type"))
       {
+        case 'settings':
+          str_suite = str_suite + Blockly.TXT.getSettings(blocks[i]);
+          break;
+        case 'setting_resource':
+          str_suite = str_suite + Blockly.TXT.getResource(blocks[i]);
+          break; 
+        case 'testsuite':
+          str_suite = str_suite + Blockly.TXT.getTestSuite(blocks[i]);
+          break; 
         case 'case_name':
-          testcase_list = testcase_list.concat(Blockly.TXT.getCasename(blocks[i]));
+          str_suite = str_suite + Blockly.TXT.getCasename(blocks[i]);
           break;
         case 'setting_documentation':
-          testcase_list = testcase_list.concat(Blockly.TXT.getDocumentation(blocks[i]));
+          str_suite = str_suite + Blockly.TXT.getDocumentation(blocks[i]);
           break;
         case 'setting_tags':
-          testcase_list = testcase_list.concat(Blockly.TXT.getTags(blocks[i]));
+          str_suite = str_suite + Blockly.TXT.getTags(blocks[i]);
           break;
         case 'setting_setup':
-          testcase_list = testcase_list.concat(Blockly.TXT.getSetup(blocks[i]));
+          str_suite = str_suite + Blockly.TXT.getSetup(blocks[i]);
           break;
         case 'procedures_callnoreturn':
-          testcase_list = testcase_list.concat(Blockly.TXT.getFuntion(blocks[i]));
+          str_suite = str_suite + Blockly.TXT.getFunction(blocks[i]);
           break;
         case 'setting_teardown':
-          testcase_list = testcase_list.concat(Blockly.TXT.getTeardown(blocks[i]));
+          str_suite = str_suite + Blockly.TXT.getTeardown(blocks[i]);
           break;
       }
 
     };
-    // 将String格式化为RobotFramework支持的TXT格式
-    content.textContent = testcase_list.toString().replace(/,/g, '    ');
+    content.textContent = str_suite;
   }
 };
 
@@ -410,18 +419,20 @@ Code.init = function() {
   Code.bindClick('trashButton',
       function() {Code.discard(); Code.renderContent();});
   Code.bindClick('runButton', Code.runJS);
+
+  Code.bindClick('saveButton', Code.saveTXT);
   // Disable the link button if page isn't backed by App Engine storage.
-  var linkButton = document.getElementById('linkButton');
-  if ('BlocklyStorage' in window) {
-    BlocklyStorage['HTTPREQUEST_ERROR'] = MSG['httpRequestError'];
-    BlocklyStorage['LINK_ALERT'] = MSG['linkAlert'];
-    BlocklyStorage['HASH_ERROR'] = MSG['hashError'];
-    BlocklyStorage['XML_ERROR'] = MSG['xmlError'];
-    Code.bindClick(linkButton,
-        function() {BlocklyStorage.link(Code.workspace);});
-  } else if (linkButton) {
-    linkButton.className = 'disabled';
-  }
+  // var saveButton = document.getElementById('saveButton');
+  // if ('BlocklyStorage' in window) {
+  //   BlocklyStorage['HTTPREQUEST_ERROR'] = MSG['httpRequestError'];
+  //   BlocklyStorage['LINK_ALERT'] = MSG['linkAlert'];
+  //   BlocklyStorage['HASH_ERROR'] = MSG['hashError'];
+  //   BlocklyStorage['XML_ERROR'] = MSG['xmlError'];
+  //   Code.bindClick(saveButton,
+  //       function() {BlocklyStorage.link(Code.workspace);});
+  // } else if (saveButton) {
+  //   saveButton.className = 'disabled';
+  // }
 
   for (var i = 0; i < Code.TABS_.length; i++) {
     var name = Code.TABS_[i];
@@ -473,12 +484,12 @@ Code.initLanguage = function() {
   document.getElementById('title').textContent = MSG['title'];
   document.getElementById('tab_blocks').textContent = MSG['blocks'];
 
-  document.getElementById('linkButton').title = MSG['linkTooltip'];
+  document.getElementById('saveButton').title = MSG['saveTooltip'];
   document.getElementById('runButton').title = MSG['runTooltip'];
   document.getElementById('trashButton').title = MSG['trashTooltip'];
 
 
-  var categories = ['catCasename', 'catDocumentation', 'catTags', 'catSetup', 'catTeardown', 'catText', 'catFunctions'];
+  var categories = ['catCasename', 'catSettings', 'catText', 'catFunctions'];
   for (var i = 0, cat; cat = categories[i]; i++) {
     document.getElementById(cat).setAttribute('name', MSG[cat]);
   }
@@ -489,25 +500,41 @@ Code.initLanguage = function() {
 };
 
 /**
- * Execute the user's code.
+ * Execute the user's txt at local system by RobotFramework.
  * Just a quick and dirty eval.  Catch infinite loops.
  */
 Code.runJS = function() {
-  Blockly.JavaScript.INFINITE_LOOP_TRAP = '  checkTimeout();\n';
-  var timeouts = 0;
-  var checkTimeout = function() {
-    if (timeouts++ > 1000000) {
-      throw MSG['timeout'];
-    }
-  };
-  var code = Blockly.JavaScript.workspaceToCode(Code.workspace);
-  Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-  try {
-    eval(code);
-  } catch (e) {
-    alert(MSG['badCode'].replace('%1', e));
-  }
+  var txt_path = prompt("请输入要运行的txt文件的本地路径", "");
+  var pybot_cmd = "pybot " + txt_path;
+  var cmd = new ActiveXObject("WScript.Shell");
+  cmd.Run(pybot_cmd);
+
+  // Blockly.JavaScript.INFINITE_LOOP_TRAP = '  checkTimeout();\n';
+  // var timeouts = 0;
+  // var checkTimeout = function() {
+  //   if (timeouts++ > 1000000) {
+  //     throw MSG['timeout'];
+  //   }
+  // };
+  // var code = Blockly.JavaScript.workspaceToCode(Code.workspace);
+  // Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+  // try {
+  //   eval(code);
+  // } catch (e) {
+  //   alert(MSG['badCode'].replace('%1', e));
+  // }
 };
+
+/**
+ * Save TXT content to local system
+ * Use H5 FileSave.min.js
+ */
+Code.saveTXT = function() {
+  var content = document.getElementById('content_dart');
+  var txt = content.textContent;
+  var blob = new Blob([txt], {type: "text/plain;charset=utf-8"});
+  saveAs(blob, "TestSuite.txt", false);
+}
 
 /**
  * Discard all blocks from the workspace.
