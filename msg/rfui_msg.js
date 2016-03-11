@@ -20,7 +20,7 @@
 
 /**
  * @fileoverview English strings.
- * @author fraser@google.com (Neil Fraser)
+ * @author longmazhanfeng@gmail.com
  *
  * After modifying this file, either run "build.py" from the parent directory,
  * or run (from this directory):
@@ -59,3 +59,11 @@ Blockly.Msg.rfui.RESOURCE = "Resource";
 Blockly.Msg.rfui.TESTSUITE_LINE = "*** Test Cases ***";
 // Robot格式 Setting分割线
 Blockly.Msg.rfui.SETTING_LINE = "*** Settings ***";
+// Robot格式 Keywords分割线
+Blockly.Msg.rfui.KEYWORDS_LINE = "*** Keywords ***";
+// block function type
+Blockly.Msg.rfui.FUNCTION_TYPE = "procedures_defnoreturn";
+// function comment text
+Blockly.Msg.rfui.COMMENTEXT = "Describe this function...";
+// function field name
+Blockly.Msg.rfui.FIELD_NAME = "NAME";

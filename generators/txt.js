@@ -20,7 +20,7 @@
 
 /**
  * @fileoverview Helper functions for generating txt for blocks.
- * @author fraser@google.com (Neil Fraser)
+ * @author longmazhanfeng@gmail.com
  */
 'use strict';
 
@@ -138,4 +138,46 @@ Blockly.TXT.getFunction = function (block) {
 	};        
 	str_function = str_function + "\n";
 	return str_function;
+}
+
+// xml转换为txt
+Blockly.TXT.xmlToTXT = function (xmlDom) {
+	var str_suite = "";
+	// 开始解析，遍历子节点
+	var blocks = xmlDom.getElementsByTagName("block");
+	// console.log(blocks.length);
+	for (var i = 0; i < blocks.length; i++) {     
+	  switch (blocks[i].getAttribute("type"))
+	  {
+	    case 'settings':
+	      str_suite = str_suite + Blockly.TXT.getSettings(blocks[i]);
+	      break;
+	    case 'setting_resource':
+	      str_suite = str_suite + Blockly.TXT.getResource(blocks[i]);
+	      break; 
+	    case 'testsuite':
+	      str_suite = str_suite + Blockly.TXT.getTestSuite(blocks[i]);
+	      break; 
+	    case 'case_name':
+	      str_suite = str_suite + Blockly.TXT.getCasename(blocks[i]);
+	      break;
+	    case 'setting_documentation':
+	      str_suite = str_suite + Blockly.TXT.getDocumentation(blocks[i]);
+	      break;
+	    case 'setting_tags':
+	      str_suite = str_suite + Blockly.TXT.getTags(blocks[i]);
+	      break;
+	    case 'setting_setup':
+	      str_suite = str_suite + Blockly.TXT.getSetup(blocks[i]);
+	      break;
+	    case 'procedures_callnoreturn':
+	      str_suite = str_suite + Blockly.TXT.getFunction(blocks[i]);
+	      break;
+	    case 'setting_teardown':
+	      str_suite = str_suite + Blockly.TXT.getTeardown(blocks[i]);
+	      break;
+	  }
+
+	};
+	return str_suite;
 }

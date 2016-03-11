@@ -26,7 +26,8 @@ Web端完整用例示范
 
 
 
-----------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+
 Windows:
 E:\Robot_RIDE\YX_RFUI_Framework_demo\Test\YX_Subscriptions\TestSuite.txt
 
@@ -49,3 +50,74 @@ Web端完整用例示范
     基础素材页_删除最新创建的单图文
     创建单图文页_成功验证
     [Teardown]    关闭Chrome浏览器   
+
+
+------------------------------------------------------------------------------------------------------------------
+
+*** Settings ***
+Resource          UIElement.txt
+Resource          ../../../../Resources/Web_Config.txt
+
+*** Keywords ***
+登录页_登录易信公众平台
+    [Arguments]    ${用户名}    ${密码}    ${验证标志}=None    # 如果无需验证则可以不传验证标志参数
+    [Documentation]    登录易信公众平台
+    ...    传入两个参数：${用户名} | ${密码} | ${验证标志}
+    [Tags]    Web
+    Web Click Text Button    登录平台
+    Web Input Text    &{登录页}[input_username]    ${用户名}
+    Web Input Password    &{登录页}[input_password]    ${密码}
+    Web Click Element    &{登录页}[input_login]
+    sleep    1s
+    Web Page Screenshot
+    Run Keyword Unless    '${验证标志}'=='None'    Web Page Should Contain    ${验证标志}
+
+公众平台主页_进入基础素材页
+    [Documentation]    进入基础素材页
+    [Tags]    Web
+    Web Click Text Button    基础素材
+
+创建单图文页_新建单图文
+    [Arguments]    ${标题}    ${上传文件路径}    ${副标题}    ${正文}    ${图文访问链接}
+    [Documentation]    新建单图文
+    [Tags]    Web
+    Web Input Text    &{创建单图文页}[input_title]    ${标题}
+    Web Select Frame    xpath=//iframe[@class='u-upload']
+    Web Choose File    id=file    ${上传文件路径}
+    Web Unselect Frame
+    Comment    Web Click Element    &{创建单图文页}[input_file]
+    Comment    Web Upload File    ${上传文件路径}
+    #Web Choose File    &{创建单图文页}[input_file]    ${上传文件路径}
+    Web Input Text    &{创建单图文页}[textarea_subtitle]    ${副标题}
+    Web Select Frame    &{创建单图文页}[iframe]
+    Web Input Text    &{创建单图文页}[body]    ${正文}
+    Web Unselect Frame
+    Web Input Text    &{创建单图文页}[input_rurl]    ${图文访问链接}
+    Web Click Element    &{创建单图文页}[input_save]
+
+基础素材页_删除最新创建的单图文
+    [Documentation]    删除最新创建的图文
+    ...    清除操作
+    Web Click Element    &{基础素材页}[a_delete]
+    Web Confirm Alert Ok
+
+基础素材页_进入创建单图文页
+    Web Click Text Button    新建单图文
+
+基础素材页_进入子页
+    [Arguments]    ${子叶名称}
+    Web Click Text Button    ${子叶名称}
+
+图片管理页_上传图片
+    [Arguments]    ${图片路径}
+    Comment    Web Choose File    xpath=//span[@class='upload j-upload']    ${图片路径}
+    Comment    Web Click Element    xpath=//span[@class='upload j-upload']
+    Comment    Web Click Element    id=upload
+    Web Click Element    id=upload
+    Web Choose File    id=upload    ${图片路径}
+    sleep    5
+
+创建单图文页_成功验证
+    Sleep    2s
+    Web Page Should Contain    一条单图文消息
+    Web Page Should Contain    副标题

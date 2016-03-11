@@ -313,47 +313,9 @@ Code.renderContent = function() {
     xmlTextarea.value = xmlText;
     xmlTextarea.focus();
   } else if (content.id == 'content_dart') {
-
     // 尝试显示xml转义的RobotFramework Testcase---txt格式
     var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
-    var str_suite = "";
-    // 开始解析，遍历子节点
-    var blocks = xmlDom.getElementsByTagName("block");
-    // console.log(blocks.length);
-    for (var i = 0; i < blocks.length; i++) {     
-      switch (blocks[i].getAttribute("type"))
-      {
-        case 'settings':
-          str_suite = str_suite + Blockly.TXT.getSettings(blocks[i]);
-          break;
-        case 'setting_resource':
-          str_suite = str_suite + Blockly.TXT.getResource(blocks[i]);
-          break; 
-        case 'testsuite':
-          str_suite = str_suite + Blockly.TXT.getTestSuite(blocks[i]);
-          break; 
-        case 'case_name':
-          str_suite = str_suite + Blockly.TXT.getCasename(blocks[i]);
-          break;
-        case 'setting_documentation':
-          str_suite = str_suite + Blockly.TXT.getDocumentation(blocks[i]);
-          break;
-        case 'setting_tags':
-          str_suite = str_suite + Blockly.TXT.getTags(blocks[i]);
-          break;
-        case 'setting_setup':
-          str_suite = str_suite + Blockly.TXT.getSetup(blocks[i]);
-          break;
-        case 'procedures_callnoreturn':
-          str_suite = str_suite + Blockly.TXT.getFunction(blocks[i]);
-          break;
-        case 'setting_teardown':
-          str_suite = str_suite + Blockly.TXT.getTeardown(blocks[i]);
-          break;
-      }
-
-    };
-    content.textContent = str_suite;
+    content.textContent = Blockly.TXT.xmlToTXT(xmlDom);
   }
 };
 
@@ -415,9 +377,12 @@ Code.init = function() {
   }
 
   Code.tabClick(Code.selected);
+  // add eventlistener to input
+  var filesinput = document.getElementById("files");
+  filesinput.addEventListener("change", function(event){Code.readFile(event);});
 
-  Code.bindClick('trashButton',
-      function() {Code.discard(); Code.renderContent();});
+  Code.bindClick('trashButton', function() {Code.discard(); Code.renderContent();});
+
   Code.bindClick('runButton', Code.runJS);
 
   Code.bindClick('saveButton', Code.saveTXT);
@@ -530,8 +495,8 @@ Code.runJS = function() {
  * Use H5 FileSave.min.js
  */
 Code.saveTXT = function() {
-  var content = document.getElementById('content_dart');
-  var txt = content.textContent;
+  var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
+  var txt = Blockly.TXT.xmlToTXT(xmlDom);
   var blob = new Blob([txt], {type: "text/plain;charset=utf-8"});
   saveAs(blob, "TestSuite.txt", false);
 }
@@ -556,3 +521,84 @@ document.write('<script src="msg/' + Code.LANG + '.js"></script>\n');
 document.write('<script src="../../msg/js/' + Code.LANG + '.js"></script>\n');
 
 window.addEventListener('load', Code.init);
+
+// 检测当前浏览器是否支持File API
+Code.isSupportFileAPI = function() {
+  if (window.File && window.FileList && window.FileReader && window.Blob) {
+    return true;
+  };
+  return false;
+}
+
+// 读取本地文件的内容，以单个txt文件为单位生成function blocks，可以同时处理多个文件
+Code.readFile = function(event) {  
+  var files = event.target.files;
+  var str;
+  for (var i = 0; i < files.length; i++) {
+    str = "";
+    var txtReader = new FileReader();
+    txtReader.addEventListener("load", function(event) {
+      str = str + event.target.result;
+      Code.addBlockToXml(str);      
+    });   
+    txtReader.readAsText(files[i]);
+  };
+   
+}
+
+// 从字符串获取关键字的信息添加到xml中
+Code.addBlockToXml = function(str) {
+  var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
+  // 找出 "*** Keywords ***" 的起始位置
+  var kw_end = str.indexOf(Blockly.Msg.rfui.KEYWORDS_LINE) + Blockly.Msg.rfui.KEYWORDS_LINE.length;
+  var str_kws = str.substring(kw_end);
+  // 以空行分割字符串
+  var list_kws = str_kws.split(/\n\s*\r/);
+  // 每个list_kws[i] 是一个关键字的定义
+  for (var i = 0; i < list_kws.length; i++) {
+    // 新建function block(自定义关键字)，生成随机字符串id
+    var element = goog.dom.createDom('block');
+    element.setAttribute('type', Blockly.Msg.rfui.FUNCTION_TYPE);
+    element.setAttribute('id', Math.random().toString(36).substr(2));
+
+    // 取关键字定义的前两行字符串的内容即可（使用split之后其实是第二行和第三行）
+    var list_kw = list_kws[i].split("\n");
+
+    // 如果关键字包含参数，则取出参数名称
+    // list_kw[2]是参数，list_kw[1]是关键字名称
+    if (list_kw[2].indexOf("Arguments") != -1) {
+      var mutation = goog.dom.createDom('mutation');
+      // 用分隔符划分，取出数值
+      var list_args = list_kw[2].split("    ");
+      for (var j = 0; j < list_args.length; j++) {
+        if (list_args[j].search(/\$\{.*\}/) != -1) {
+          var arg = goog.dom.createDom('arg');
+          arg.setAttribute('name', list_args[j].substring(list_args[j].indexOf("{")+1, list_args[j].indexOf("}")));
+          mutation.appendChild(arg);
+          // console.log(list_args[j].substring(list_args[j].indexOf("{")+1, list_args[j].indexOf("}")));
+        };
+      };      
+    };
+    element.appendChild(mutation);
+
+    // 设置关键字名称 —— field 值，list_kw[1]是关键字名称
+    var field = goog.dom.createDom('field', null, list_kw[1]);
+    field.setAttribute('name', Blockly.Msg.rfui.FIELD_NAME);
+    element.appendChild(field);
+
+    // 关键字的说明文本
+    var commentElement = goog.dom.createDom('comment', null, Blockly.Msg.rfui.COMMENTEXT);
+    commentElement.setAttribute('pinned', "false");
+    commentElement.setAttribute('h', "80");
+    commentElement.setAttribute('w', "160");
+    element.appendChild(commentElement);
+    // 设置坐标位置 远在屏幕之外
+    element.setAttribute('x', "1000");
+    element.setAttribute('y', "1000");
+    // 添加关键字元素到xml中    
+    xmlDom.appendChild(element);
+    // console.log(element);
+  };
+  // 更新workspace
+  Blockly.Xml.domToWorkspace(Code.workspace, xmlDom);
+}

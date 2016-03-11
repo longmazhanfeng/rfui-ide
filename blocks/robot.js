@@ -20,7 +20,7 @@
 
 /**
  * @fileoverview rfui testcase blocks for Blockly.
- * @author fraser@google.com (Neil Fraser)
+ * @author longmazhanfeng@gmail.com
  */
 'use strict';
 
