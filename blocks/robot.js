@@ -42,7 +42,7 @@ Blockly.Blocks['settings'] = {
     this.appendStatementInput(Blockly.Msg.rfui.SETTINGS_NAME)
         .appendField(Blockly.Msg.rfui.SETTINGS);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.Blocks.lists.HUE);
+    this.setColour(135);
     this.setTooltip(Blockly.Msg.rfui.CASETITLE_TIPS);
   }
 };
@@ -56,7 +56,7 @@ Blockly.Blocks['testsuite'] = {
     this.appendStatementInput(Blockly.Msg.rfui.SUITE_NAME)
         .appendField(Blockly.Msg.rfui.TESTSUITE);
     this.setPreviousStatement(true, null);
-    this.setColour(Blockly.Blocks.lists.HUE);
+    this.setColour(135);
     this.setTooltip(Blockly.Msg.rfui.CASETITLE_TIPS);
   }
 };
@@ -90,7 +90,7 @@ Blockly.Blocks['case_name'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.Blocks.lists.HUE);
+    this.setColour(330);
     this.setTooltip(Blockly.Msg.rfui.CASETITLE_TIPS);
   }
 };
@@ -373,7 +373,7 @@ Blockly.Blocks['setting_teardown'] = {
    */
   init: function() {
     this.setHelpUrl(Blockly.Msg.LISTS_CREATE_WITH_HELPURL);
-    this.setColour(Blockly.Blocks.lists.HUE);
+    this.setColour(330);
     this.setInputsInline(true);
     this.itemCount_ = 1;
     this.updateShape_();

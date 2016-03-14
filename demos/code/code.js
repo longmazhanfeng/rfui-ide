@@ -531,24 +531,32 @@ Code.isSupportFileAPI = function() {
 }
 
 // 读取本地文件的内容，以单个txt文件为单位生成function blocks，可以同时处理多个文件
-Code.readFile = function(event) {  
+Code.readFile = function(event) { 
+  var xmlDom;
   var files = event.target.files;
-  var str;
   for (var i = 0; i < files.length; i++) {
-    str = "";
     var txtReader = new FileReader();
     txtReader.addEventListener("load", function(event) {
-      str = str + event.target.result;
-      Code.addBlockToXml(str);      
-    });   
+      xmlDom = Blockly.Xml.workspaceToDom(Code.workspace); 
+      xmlDom = Code.addBlockToXml(event.target.result, xmlDom);  
+      // console.log(event.target.result);     
+    });  
+
+    txtReader.addEventListener("loadend", function(event) {
+      // 更新前需要先清空workspace
+      Code.workspace.clear();
+      // 更新workspace
+      Blockly.Xml.domToWorkspace(Code.workspace, xmlDom);
+      console.log(xmlDom);
+    });
+    // 异步读取
     txtReader.readAsText(files[i]);
   };
-   
 }
 
 // 从字符串获取关键字的信息添加到xml中
-Code.addBlockToXml = function(str) {
-  var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
+Code.addBlockToXml = function(str, xmlDom) {
+  // var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace); 
   // 找出 "*** Keywords ***" 的起始位置
   var kw_end = str.indexOf(Blockly.Msg.rfui.KEYWORDS_LINE) + Blockly.Msg.rfui.KEYWORDS_LINE.length;
   var str_kws = str.substring(kw_end);
@@ -577,10 +585,9 @@ Code.addBlockToXml = function(str) {
           mutation.appendChild(arg);
           // console.log(list_args[j].substring(list_args[j].indexOf("{")+1, list_args[j].indexOf("}")));
         };
-      };      
-    };
-    element.appendChild(mutation);
-
+      }; 
+      element.appendChild(mutation);
+    } 
     // 设置关键字名称 —— field 值，list_kw[1]是关键字名称
     var field = goog.dom.createDom('field', null, list_kw[1]);
     field.setAttribute('name', Blockly.Msg.rfui.FIELD_NAME);
@@ -593,12 +600,13 @@ Code.addBlockToXml = function(str) {
     commentElement.setAttribute('w', "160");
     element.appendChild(commentElement);
     // 设置坐标位置 远在屏幕之外
-    element.setAttribute('x', "1000");
-    element.setAttribute('y', "1000");
-    // 添加关键字元素到xml中    
+    element.setAttribute('x', "2000");
+    element.setAttribute('y', "2000");
+    // 添加关键字元素到xml中       
     xmlDom.appendChild(element);
-    // console.log(element);
   };
+  return xmlDom;
   // 更新workspace
-  Blockly.Xml.domToWorkspace(Code.workspace, xmlDom);
+  // Blockly.Xml.domToWorkspace(Code.workspace, xmlDom);
+  // console.log(count);
 }
